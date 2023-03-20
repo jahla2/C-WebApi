@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dotnet_rpg.Controllers
@@ -8,16 +9,18 @@ namespace Dotnet_rpg.Controllers
     [Route("api/[controller]")]
     public class CharacterController : ControllerBase
     {
-        //Method 
-        private static List<Character> characters = new List<Character>{
-            new Character(),
-            new Character { id = 1, name = "Sam"}
-        };
+        //
+        private readonly ICharacterService _characterService;
+
+        public CharacterController(ICharacterService characterService)
+        {
+            _characterService = characterService;
+        }
         //Controller with Route for GetAll records
         [HttpGet("GetAll")]
         public ActionResult<List<Character>> Get()
         {
-            return Ok(characters);
+            return Ok(_characterService.GetAllChraracters());
         }
 
         //Controller with Routing with parameters  
@@ -25,18 +28,16 @@ namespace Dotnet_rpg.Controllers
         [HttpGet("{id}")]
         public ActionResult<Character> GetSingle(int id)
         {
-            return Ok(characters.FirstOrDefault(c => c.id == id));
+            return Ok(_characterService.GetCharacterById(id));
         }
 
         //method for Adding new Record
         //Send via JSONObject
         [HttpPost]
-        public ActionResult<List<Character>> AddCharacter(Character newChracter)
+        public ActionResult<List<Character>> AddCharacter(Character newCharacter)
         {
-            //Add new
-            characters.Add(newChracter);
             //Retrun List
-            return Ok(characters);
+            return Ok(_characterService.AddCharacter(newCharacter));
         }
     }
 }
