@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Dotnet_rpg.Controllers
 {
-    //Api Controller
+    //Api Controller initialize HTTP Response of WEBAPI
     [ApiController]
     //Route Attribute
     [Route("api/[controller]")]
@@ -18,26 +18,26 @@ namespace Dotnet_rpg.Controllers
         }
         //Controller with Route for GetAll records
         [HttpGet("GetAll")]
-        public ActionResult<List<Character>> Get()
+        public async Task<ActionResult<List<Character>>> Get()
         {
-            return Ok(_characterService.GetAllChraracters());
+            return Ok(await _characterService.GetAllChraracters());
         }
 
         //Controller with Routing with parameters  
         //Send id Via URL
         [HttpGet("{id}")]
-        public ActionResult<Character> GetSingle(int id)
+        public async Task<ActionResult<Character>> GetSingle(int id)
         {
-            return Ok(_characterService.GetCharacterById(id));
+            return Ok(await _characterService.GetCharacterById(id));
         }
 
         //method for Adding new Record
         //Send via JSONObject
         [HttpPost]
-        public ActionResult<List<Character>> AddCharacter(Character newCharacter)
+        public async Task<ActionResult<List<Character>>> AddCharacter(Character newCharacter)
         {
             //Retrun List
-            return Ok(_characterService.AddCharacter(newCharacter));
+            return Ok(await _characterService.AddCharacter(newCharacter));
         }
     }
 }
