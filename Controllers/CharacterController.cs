@@ -18,7 +18,7 @@ namespace Dotnet_rpg.Controllers
         }
         //Controller with Route for GetAll records
         [HttpGet("GetAll")]
-        public async Task<ActionResult<List<Character>>> Get()
+        public async Task<ActionResult<ServiceResponse<List<Character>>>> Get()
         {
             return Ok(await _characterService.GetAllChraracters());
         }
@@ -26,7 +26,7 @@ namespace Dotnet_rpg.Controllers
         //Controller with Routing with parameters  
         //Send id Via URL
         [HttpGet("{id}")]
-        public async Task<ActionResult<Character>> GetSingle(int id)
+        public async Task<ActionResult<ServiceResponse<Character>>> GetSingle(int id)
         {
             return Ok(await _characterService.GetCharacterById(id));
         }
@@ -34,7 +34,7 @@ namespace Dotnet_rpg.Controllers
         //method for Adding new Record
         //Send via JSONObject
         [HttpPost]
-        public async Task<ActionResult<List<Character>>> AddCharacter(Character newCharacter)
+        public async Task<ActionResult<ServiceResponse<List<Character>>>> AddCharacter(Character newCharacter)
         {
             //Retrun List
             return Ok(await _characterService.AddCharacter(newCharacter));
